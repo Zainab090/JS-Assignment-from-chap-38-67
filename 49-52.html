@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .form-container {
+        display: inline-block;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    .form-container input {
+        display: block;
+        margin: 10px auto;
+        padding: 8px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 300px;
+    }
+    .form-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    .result {
+        margin-top: 20px;
+    }
+    .content-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content {
+            display: none; /* Hide the full content initially */
+        }
+        .read-more-button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .read-more-button:hover {
+            background-color: #0056b3;
+        }
+        .form-container, .edit-container {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        .edit-container {
+            display: none;
+            margin-top: 20px;
+        }
+</style>
+</head>
+<body>
+<h1>Question#1</h1>
+<div class="form-container">
+    <h1>Signup Form</h1>
+    <form id="signupForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="result" id="result">
+</div>
+<hr>
+<h1>Question#2</h1>
+<div class="content-container">
+    <h1>Item Details</h1>
+    <p id="shortContent">
+        This is a brief overview of the item. It includes some important details, but not everything.
+    </p>
+    <div id="fullContent" class="content">
+        <p>This is the full detail of the item. It contains comprehensive information, additional insights, and everything you need to know about the item. Here, you can provide more context, specifications, and any other relevant details that will help the user understand the item completely.</p>
+    </div>
+    <button id="readMoreButton" class="read-more-button">Read More</button>
+</div>
+<hr>
+<h1>Question#3</h1>
+<div class="form-container">
+    <h1>Student Details Form</h1>
+    <form id="studentForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="text" id="class" placeholder="Class" required>
+        <button type="submit">Add Student</button>
+    </form>
+</div>
+
+<div class="edit-container" id="editContainer">
+    <h1>Edit Student Details</h1>
+    <form id="editForm">
+        <input type="hidden" id="editIndex">
+        <input type="text" id="editName" placeholder="Name" required>
+        <input type="text" id="editClass" placeholder="Class" required>
+        <button type="submit">Save Changes</button>
+        <button type="button" id="cancelEdit">Cancel</button>
+    </form>
+</div>
+
+<table id="studentTable">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+    <script>
+        // 1. Create a signup form and display form data in your web 
+        // page on submission.
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            document.getElementById('result').innerHTML = `
+                <h2>Form Data</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Password:</strong> ${password}</p>
+            `;
+        });
+//         2. Suppose in your webpage there is content area in which 
+// you have entered your item details, but user can only see 
+// some details on first look. When user clicks on “Read 
+// more” button, full detail of that particular item will be 
+// displayed.
+        const readMoreButton = document.getElementById('readMoreButton');
+        const fullContent = document.getElementById('fullContent');
+        const shortContent = document.getElementById('shortContent');
+
+        readMoreButton.addEventListener('click', function() {
+            if (fullContent.style.display === 'none') {
+                fullContent.style.display = 'block'; 
+                readMoreButton.textContent = 'Read Less'; 
+            } else {
+                fullContent.style.display = 'none'; 
+                readMoreButton.textContent = 'Read More';
+            }
+        });
+//         3. In previous assignment you have created a tabular data 
+// using javascript. Let’s modify that. Create a form which 
+// takes student’s details and show each student detail in 
+// table. Each row of table must contain a delete button and 
+// an edit button. On click on delete button entire row should 
+// be deleted. On click on edit button, a hidden form will 
+// appear with the values of that row.
+const studentForm = document.getElementById('studentForm');
+        const editForm = document.getElementById('editForm');
+        const studentTable = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+        const editContainer = document.getElementById('editContainer');
+        const cancelEditButton = document.getElementById('cancelEdit');
+
+        let students = [];
+        let currentEditIndex = -1;
+
+        studentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const studentClass = document.getElementById('class').value;
+            
+            if (currentEditIndex === -1) {
+                const index = students.length + 1;
+                students.push({ index, name, class: studentClass });
+            } else {
+                students[currentEditIndex] = { index: students[currentEditIndex].index, name, class: studentClass };
+                currentEditIndex = -1;
+                editContainer.style.display = 'none';
+            }
+
+            updateTable();
+            studentForm.reset();
+        });
+
+        function updateTable() {
+            studentTable.innerHTML = ''; 
+            students.forEach(student => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${student.index}</td>
+                    <td>${student.name}</td>
+                    <td>${student.class}</td>
+                    <td>
+                        <button onclick="editStudent(${student.index - 1})">Edit</button>
+                        <button onclick="deleteStudent(${student.index - 1})">Delete</button>
+                    </td>
+                `;
+
+                studentTable.appendChild(row);
+            });
+        }
+
+        function editStudent(index) {
+            const student = students[index];
+            document.getElementById('editIndex').value = student.index;
+            document.getElementById('editName').value = student.name;
+            document.getElementById('editClass').value = student.class;
+
+            editContainer.style.display = 'block';
+            currentEditIndex = index;
+        }
+
+        function deleteStudent(index) {
+            students.splice(index, 1); 
+            updateTable(); 
+        }
+
+        cancelEditButton.addEventListener('click', function() {
+            editContainer.style.display = 'none';
+            currentEditIndex = -1;
+        });
+    
+    </script>
+</body>
+</html>

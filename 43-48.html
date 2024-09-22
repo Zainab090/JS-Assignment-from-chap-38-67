@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 200px;
+            height: 200px;
+            margin-left: 10px;
+        }
+        .main{
+            display: flex;
+        }
+        figcaption{
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .counter-container {
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .counter-value {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+
+    <h1>Question#1</h1>
+   <a href="#" onclick="showAlert()">Click me</a> 
+   <hr>
+
+
+   <h1>Question#2</h1>
+<h1 style="color: rgb(0, 106, 255);">Mobile Phone lookup</h1>
+<div class="main">
+<figure><img src="./images/mobile2.jpeg" alt="" onclick="message()"><figcaption>Iphone</figcaption></figure>
+<figure><img src="./images/mobile3.avif" alt="" onclick="message()"><figcaption>Samsung</figcaption></figure>
+<figure><img src="./images/mobile4.avif" alt="" onclick="message()"><figcaption>Oppo</figcaption></figure>
+<figure><img src="./images/mobile1.jpg" alt="" onclick="message()"><figcaption>Real me</figcaption></figure>
+</div>
+<hr>
+<h1>Question#3</h1>
+
+<h1>Student Records</h1>
+
+<table border="1" id="studentTable" style="border-collapse: collapse;">
+    <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Action</th>
+    </tr>
+</table>
+<hr>
+<h1>Question#4</h1>
+<img src="./images/download.jpeg" alt="image" id="img1" onmouseover="onUserOver()" onmouseout="onUserOut()">
+<hr>
+<h1>Question#5</h1>
+<div class="counter-container">
+    <div class="counter-value" id="counter">0</div>
+    <button onclick="decrease()" class="btn">Decrease</button>
+    <button onclick="increase()" class="btn">Increase</button>
+</div>
+
+
+   <script>
+
+    // 1. Show an alert box on click on a link 
+
+    function showAlert() {
+       alert("You clicked the link!")
+    }
+    document.write("<hr>");
+
+// 2. Display some Mobile images in browser. On click on an 
+// image Show the message in alert to user.
+
+function message() {
+    alert("Thanks for purchasing phone from us!")
+}
+
+// 3. Display 10 student records in table and each row should contain a delete 
+// button. If you click on a button to delete a record, entire row should be 
+// deleted. 
+        const students = [
+            { index: 0, name: 'Jhone', class: '10' },
+            { index: 1, name: 'Doe', class: '9' },
+            { index: 2, name: 'James', class: '8' },
+        ];
+        const table = document.getElementById('studentTable');
+        students.forEach(function(student) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.index}</td>
+                <td>${student.name}</td>
+                <td>${student.class}</td>
+                <td><button onclick="deleteRow(this)">Delete</button></td>
+            `;
+            table.appendChild(row);
+        });
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode;
+            row.remove();
+        }
+
+//     4. Display an image in browser. Change the picture on mouseover and set the
+// first picture on mouseout.
+  function onUserOver() {
+    document.getElementById('img1').src="./images/img2.jpeg";
+  }
+function onUserOut() {
+    document.getElementById('img1').src="./images/download.jpeg";
+}
+// 5. Show a counter in browser. Counter should increase on click on increase 
+// button and decrease on click on decrease button. And show updated counter 
+// value in browser.
+let counter = 0;
+
+function updateDisplay() {
+    document.getElementById('counter').innerText = counter;
+}
+
+function increase() {
+    counter++;
+    updateDisplay();
+}
+
+function decrease() {
+    counter--;
+    updateDisplay();
+}
+
+updateDisplay();
+   </script>
+</body>
+</html>

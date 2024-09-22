@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Write a custom function power ( a, b ), to calculate the value of 
+        // a raised to b.
+        document.write("<h1>Question#1</h1>")
+      
+    function power(a, b) {
+        return Math.pow(a,b);
+    }
+    document.write(power(2, 3)); 
+
+
+        document.write("<hr>");
+//         2. Any year is entered through the keyboard. Write a function to 
+// determine whether the year is a leap year or not.
+// Leap years ..., 2012, 2016, 2020, …
+document.write("<h1>Question#2</h1>")
+
+function isLeapYear(year) {
+    if (year % 4 === 0) {
+        if (year % 100 === 0) {
+            if (year % 400 === 0) {
+                return true;  
+            } else {
+                return false; 
+            }
+        } else {
+            return true; 
+        }
+    } else {
+        return false;
+    }
+}
+let year = prompt("Enter a year:");
+year = parseInt(year);
+
+if (isLeapYear(year)) {
+    document.write(year + " is a leap year.");
+} else {
+    document.write(year + " is not a leap year.");
+}
+
+document.write("<hr>")
+
+// 3. If the lengths of the sides of a triangle are denoted by a, b, and 
+// c, then area of triangle is given by
+// area = S(S − a)(S − b)(S − c)
+// where, S = ( a + b + c ) / 2
+// Calculate area of triangle using 2 functions
+
+document.write("<h1>Question#3</h1>")
+
+function calculateSemiPerimeter(a, b, c) {
+    return (a + b + c) / 2;
+}
+function areaOfTriangle(a, b, c) {
+    let S = calculateSemiPerimeter(a, b, c);
+    let area = Math.sqrt(S * (S - a) * (S - b) * (S - c));
+    return area;
+}
+document.write("Area of triangle with sides 2, 3, 4: " + Math.round(areaOfTriangle(2, 3, 4)));
+
+document.write("<hr>")
+
+// 4. Write a function that receives marks received by a student in 3 
+// subjects and returns the average and percentage of these
+// marks. there should be 3 functions one is the mainFunction 
+// and other are for average and percentage. Call those functions 
+// from mainFunction and display result in mainFunction.
+document.write("<h1>Question#4</h1>")
+
+let mark1 = parseInt(prompt("Enter the marks of the first subject:"));
+let mark2 = parseInt(prompt("Enter the marks of the second subject:"));
+let mark3 = parseInt(prompt("Enter the marks of the third subject:"));
+let totalMarks = parseInt(prompt("Enter the total marks for all subjects:"));
+
+function mainFunction(mark1, mark2, mark3, totalMarks) {
+    function average() {
+        let averageValue = (mark1 + mark2 + mark3) / 3;  
+        return averageValue;
+    }
+    function percentage() {
+        let totalObtainedMarks = mark1 + mark2 + mark3;
+        let percentageValue = (totalObtainedMarks / totalMarks) * 100;
+        return percentageValue;
+    }
+
+    let avg = average();
+    let perc = percentage();
+
+    document.write("<p>Average Marks: " + avg + "</p>");
+    document.write("<p>Percentage: " + perc + "%</p>");
+}
+mainFunction(mark1, mark2, mark3, totalMarks);
+
+document.write("<hr>");
+
+// 5. You have learned the function indexOf. Code your own custom 
+// function that will perform the same functionality. You can code 
+// for single character as of now.
+document.write("<h1>Question#5</h1>")
+
+function customIndexOf(str, char) {
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === char) {
+            return i;  
+        }
+    }
+    return -1;  
+}
+let myString = prompt("Enter a string:");
+let searchChar = prompt("Enter a character to search for:");
+let result = customIndexOf(myString, searchChar);
+if (result !== -1) {
+    document.write("The character '" + searchChar + "' was found at index: " + result);
+} else {
+    document.write("The character '" + searchChar + "' was not found in the string.");
+}
+
+document.write("<hr>");
+
+// 6. Write a function to delete all vowels from a sentence. Assume 
+// that the sentence is not more than 25 characters long
+document.write("<h1>Question#6</h1>")
+
+function removeVowels(sentence) {
+    const vowels = "aeiouAEIOU";
+    let result = "";
+    
+    for (let i = 0; i < sentence.length; i++) {
+        let char = sentence[i];
+        if (!vowels.includes(char)) {
+            result += char;
+        }
+    }
+    return result;
+}
+let sentence = "This is a test sentence";
+document.write(removeVowels(sentence));  
+
+document.write("<hr>");
+
+// 7. Write a function with switch statement to count the number of 
+// occurrences of any two vowels in succession in a line of text. 
+// For example, in the sentence
+document.write("<h1>Question#7</h1>")
+let sentence1 = "This is an example of a sequence of vowels like AI or ia";
+
+function countVowelPairs(sentence1) {
+    let count = 0; 
+    let vowels = "aeiouAEIOU"; 
+    for (let i = 0; i < sentence1.length - 1; i++) {
+        let currentChar = sentence1[i];
+        let nextChar = sentence1[i + 1];
+        switch (true) {
+            case vowels.includes(currentChar) && vowels.includes(nextChar):
+                count++;
+                break;
+        }
+    }
+
+    return count > 0 
+        ? `Occurrences of two consecutive vowels: ${count}` 
+        : "No two consecutive vowels found.";
+}
+document.write(countVowelPairs(sentence1));
+document.write("<hr>");
+
+// 8. The distance between two cities (in km.) is input through the 
+// keyboard. Write four functions to convert and print this 
+// distance in meters, feet, inches and centimeters.
+document.write("<h1>Question#8</h1>");
+let distance=parseInt(prompt("Enter a distance between two cities in km:"));
+function meters() {
+    let meters = distance * 1000;         
+    return meters;
+}
+function feet() {
+    let feet = distance * 3280.84;        
+   return feet;
+}
+function inches() {
+    let inches = distance * 39370.1;    
+    return inches;  
+}
+function centimeters() {
+    let centimeters = distance * 100000;  
+    return centimeters;
+}
+document.write("Distance in kilometers: " + distance + " km<br>");
+        document.write("Distance in meters: " + meters(distance) + " meters<br>");
+        document.write("Distance in feet: " + feet(distance) + " feet<br>");
+        document.write("Distance in inches: " + inches(distance) + " inches<br>");
+        document.write("Distance in centimeters: " + centimeters(distance) + " centimeters<br>");
+        document.write("<hr>");
+
+//         9. Write a program to calculate overtime pay of employees. 
+// Overtime is paid at the rate of Rs. 12.00 per hour for every hour 
+// worked above 40 hours. Assume that employees do not work 
+// for fractional part of an hour.
+document.write("<h1>Question#9</h1>");
+
+        function calculateOvertimePay(hoursWorked) {
+            const regularHours = 40;
+            const overtimeRate = 12; 
+            let overtimeHours = 0;
+            let overtimePay = 0;
+
+            if (hoursWorked > regularHours) {
+                overtimeHours = hoursWorked - regularHours;
+                overtimePay = overtimeHours * overtimeRate;
+            }
+
+            return overtimePay;
+        }
+
+        let hoursWorked = parseInt(prompt("Enter the number of hours worked:"));
+        let overtimePay = calculateOvertimePay(hoursWorked);
+        document.write("Total hours worked: " + hoursWorked + "<br>");
+        document.write("Overtime pay: Rs. " + overtimePay.toFixed(2) + "<br>");
+        document.write("<hr>");
+
+        document.write("<hr>");
+
+//         10. A cashier has currency notes of denominations 10, 50 and 
+// 100. If the amount to be withdrawn is input through the 
+// keyboard in hundreds, find the total number of currency notes 
+// of each denomination the cashier will have to give to the 
+// withdrawer.
+document.write("<h1>Question#10</h1>");
+
+let withdrawer = parseInt(prompt("Enter the amount to be withdrawn in hundreds:"));
+
+function currencyNotes(withdrawer) {
+    if (withdrawer % 100 !== 0) {
+        return "Please enter a valid amount in hundreds.";
+    }
+
+    let count_100 = 0;
+    let count_50 = 0;
+    let count_10 = 0;
+
+    count_100 = Math.floor(withdrawer / 100);
+    let remaining_amount = withdrawer % 100;
+
+    count_50 = Math.floor(remaining_amount / 50);
+    remaining_amount = remaining_amount % 50;
+
+    count_10 = Math.floor(remaining_amount / 10);
+
+    return `100s: ${count_100}, 50s: ${count_50}, 10s: ${count_10}`;
+}
+
+let result1 = currencyNotes(withdrawer);
+document.write(result1);
+
+document.write("<hr>");
+
+
+    </script>
+</body>
+</html>
